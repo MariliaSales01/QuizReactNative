@@ -12,10 +12,11 @@ export default function DesenhosScreen () {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{reactQuestions [currentQuestionIndex].question}</Text>
-      {reactQuestions[currentQuestionIndex].options.map((options) => <View>
+      {reactQuestions[currentQuestionIndex].options.map((options) => 
+      <View>
         <Pressable style={styles.button} >
           <Text style={styles.options}>{options}</Text>
-          </Pressable>
+        </Pressable>
       </View>)}
 
       <Pressable style={styles.buttonNext} onPress={handleNext}>
@@ -35,14 +36,21 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight:'800',
     justifyContent: 'center',
+    marginBottom:40,
   },
   options:{
     fontSize: 20,
-    paddingTop: 20, 
+    textAlign:'center',
+    marginHorizontal:100,
+    marginVertical:20,
+    color: '#fff'
   },
   button:{
-    margin: 30,
+    marginTop: 30,
+    alignSelf: 'center',
+    backgroundColor:'#2196F3',
   },
+
   buttonNext:{ 
     backgroundColor:'pink',
     borderRadius: 5,
@@ -52,7 +60,7 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize: 20,
-    fontWeight:'400',
+    fontWeight:'500',
     textAlign:'center'
   }
 })
