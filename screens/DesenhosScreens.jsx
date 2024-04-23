@@ -1,74 +1,80 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
-import { reactQuestions
- } from './Questions'
-import { Pressable } from 'react-native-web'
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { reactQuestions } from './Questions';
+import { Pressable } from 'react-native-web';
 
-export default function DesenhosScreen () {
-  const [correctAnswer, setCorrectAnswer] = useState(false);
-  
-  const handleNext = () =>{
-    setCurrentQuestionIndex(currentQuestionIndex + 1)
-    setCorrectAnswer(false)
-  }
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+export default function DesenhosScreen() {
+  const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  const handleAnswer = (selectedOption) => {
+    if (selectedOption === reactQuestions[currentQuestionIndex].correctAnswer) {
+      setCorrectAnswer(true);
+    } else {
+      setCorrectAnswer(false);
+    }
+  };
+
+  const handleNext = () => {
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    setCorrectAnswer(null); // Reset correctAnswer state
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{reactQuestions [currentQuestionIndex].question}</Text>
-      {reactQuestions[currentQuestionIndex].options.map((options) => 
-      <View>
-        <Pressable style={{backgroundColor: correctAnswer ? 'red' : 'green'}}
-       onPress={() =>  {
-          if ( options == reactQuestions[currentQuestionIndex].correctAnswer) {
-            setCorrectAnswer(true)
-          }
-        }}>
-          <Text style={styles.options}>{options}</Text>
-        </Pressable>
-      </View>)}
-
+      <Text style={styles.title}>{reactQuestions[currentQuestionIndex].question}</Text>
+      {reactQuestions[currentQuestionIndex].options.map((option, index) => (
+        <View key={index}>
+          <Pressable
+            style={{
+              backgroundColor:
+                correctAnswer !== null && option === reactQuestions[currentQuestionIndex].correctAnswer
+                  ? 'green' // Resposta correta
+                  : correctAnswer !== null && option !== reactQuestions[currentQuestionIndex].correctAnswer
+                  ? 'red' // Resposta errada
+                  : 'blue', // Cor padrão
+            }}
+            onPress={() => handleAnswer(option)}>
+            <Text style={styles.options}>{option}</Text>
+          </Pressable>
+        </View>
+      ))}
       <Pressable style={styles.buttonNext} onPress={handleNext}>
         <Text style={styles.text}>Next</Text>
       </Pressable>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    paddingTop:100,
+  container: {
+    flex: 1,
+    paddingTop: 100,
     alignItems: 'center',
   },
-  title:{
+  title: {
     fontSize: 30,
-    fontWeight:'800',
+    fontWeight: '800',
     justifyContent: 'center',
-    marginBottom:40,
+    marginBottom: 40,
   },
-  options:{
+  options: {
     fontSize: 20,
-    textAlign:'center',
-    marginHorizontal:100,
-    marginVertical:20,
-    color: '#fff'
+    textAlign: 'center',
+    marginHorizontal: 100,
+    marginVertical: 20,
+    color: '#fff',
   },
-  button:{
-    marginTop: 30,
-    alignSelf: 'center',
-    backgroundColor:'#2196F3',
-  },
-
-  buttonNext:{ 
-    backgroundColor:'pink',
+  buttonNext: {
+    backgroundColor: 'pink',
     borderRadius: 5,
     top: 60,
     height: 40,
     width: 200,
   },
-  text:{
+  text: {
     fontSize: 20,
-    fontWeight:'500',
-    textAlign:'center'
-  }
-})
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+});
