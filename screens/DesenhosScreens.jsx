@@ -5,8 +5,11 @@ import { reactQuestions
 import { Pressable } from 'react-native-web'
 
 export default function DesenhosScreen () {
+  const [correctAnswer, setCorrectAnswer] = useState(false);
+  
   const handleNext = () =>{
     setCurrentQuestionIndex(currentQuestionIndex + 1)
+    setCorrectAnswer(false)
   }
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   return (
@@ -14,7 +17,12 @@ export default function DesenhosScreen () {
       <Text style={styles.title}>{reactQuestions [currentQuestionIndex].question}</Text>
       {reactQuestions[currentQuestionIndex].options.map((options) => 
       <View>
-        <Pressable style={styles.button} >
+        <Pressable style={{backgroundColor: correctAnswer ? 'red' : 'green'}}
+       onPress={() =>  {
+          if ( options == reactQuestions[currentQuestionIndex].correctAnswer) {
+            setCorrectAnswer(true)
+          }
+        }}>
           <Text style={styles.options}>{options}</Text>
         </Pressable>
       </View>)}

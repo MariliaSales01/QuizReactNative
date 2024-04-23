@@ -18,7 +18,7 @@ export const reactQuestions =[
             "Gohan",
             "Trunks",
         ],
-        correctAnswer: "Gohan",
+        correctAnswer: "Gohan", 
     },
 
     {
@@ -37,7 +37,7 @@ export const reactQuestions =[
         options:[
             "Vila da Folha",
             "Vila da Nuvem",
-            "Vila da Névoa ",
+            "Vila da Névoa",
             "Vila da Areia",
         ],
         correctAnswer: "Vila da Névoa",
