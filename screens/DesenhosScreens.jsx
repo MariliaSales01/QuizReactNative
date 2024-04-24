@@ -6,10 +6,12 @@ import { Pressable } from 'react-native-web';
 export default function DesenhosScreen() {
   const [correctAnswer, setCorrectAnswer] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0); // Estado para armazenar a pontuação
 
   const handleAnswer = (selectedOption) => {
     if (selectedOption === reactQuestions[currentQuestionIndex].correctAnswer) {
       setCorrectAnswer(true);
+      setScore(score + 1); // Aumenta a pontuação se a resposta estiver correta
     } else {
       setCorrectAnswer(false);
     }
@@ -39,9 +41,14 @@ export default function DesenhosScreen() {
           </Pressable>
         </View>
       ))}
-      <Pressable style={styles.buttonNext} onPress={handleNext}>
-        <Text style={styles.text}>Next</Text>
-      </Pressable>
+      <Text style={styles.score}>Score: {score}</Text> {/* Exibe a pontuação */}
+      {currentQuestionIndex < reactQuestions.length - 1 ? (
+        <Pressable style={styles.buttonNext} onPress={handleNext}>
+          <Text style={styles.text}>Next</Text>
+        </Pressable>
+      ) : (
+        <Text style={styles.score}>Quiz completo! Sua pontuação final é: {score}</Text>
+      )}
     </View>
   );
 }
@@ -76,5 +83,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     textAlign: 'center',
+  },
+  score: {
+    fontSize: 20,
+    fontWeight: '500',
+    marginTop: 20,
   },
 });
